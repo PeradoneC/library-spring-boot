@@ -1,10 +1,10 @@
-package com.peradone.library.database;
+package com.peradone.library.persistence;
 
 import java.util.ArrayList;
 
-import com.peradone.library.database.dao.GenreDao;
-import com.peradone.library.database.dao.impl.MySqlJdbcGenreDao;
-import com.peradone.library.database.dto.Genre;
+import com.peradone.library.persistence.dao.GenreDao;
+import com.peradone.library.persistence.dao.impl.MySqlJdbcGenreDao;
+import com.peradone.library.persistence.dto.Genre;
 
 public class DaoTest {
 

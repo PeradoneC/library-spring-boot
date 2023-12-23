@@ -8,9 +8,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.peradone.library.database.dao.GenreDao;
-import com.peradone.library.database.dao.impl.MySqlJdbcGenreDao;
-import com.peradone.library.database.dto.Genre;
+import com.peradone.library.persistence.dao.GenreDao;
+import com.peradone.library.persistence.dao.impl.MySqlJdbcGenreDao;
+import com.peradone.library.persistence.dto.Genre;
 
 class MySqlJdbcGenreDaoTest {
 	

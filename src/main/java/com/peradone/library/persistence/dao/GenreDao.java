@@ -1,8 +1,8 @@
-package com.peradone.library.database.dao;
+package com.peradone.library.persistence.dao;
 
 import java.util.ArrayList;
 
-import com.peradone.library.database.dto.Genre;
+import com.peradone.library.persistence.dto.Genre;
 
 public interface GenreDao {
 	ArrayList<Genre> getAllGenres();

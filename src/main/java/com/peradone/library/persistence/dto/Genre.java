@@ -1,4 +1,4 @@
-package com.peradone.library.database.dto;
+package com.peradone.library.persistence.dto;
 
 public class Genre {
 

@@ -1,4 +1,4 @@
-package com.peradone.library.database;
+package com.peradone.library.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
