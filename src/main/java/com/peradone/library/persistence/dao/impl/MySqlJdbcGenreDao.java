@@ -1,5 +1,7 @@
 package com.peradone.library.persistence.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,10 +18,7 @@ public class MySqlJdbcGenreDao implements GenreDao {
 			try (var rs = ps.executeQuery()) {
 				ArrayList<Genre> genres = new ArrayList<>();
 				while (rs.next()) {
-					Genre genre = new Genre();
-					genre.setId(rs.getInt("id"));
-					genre.setName(rs.getString("name"));
-					genres.add(genre);
+					genres.add(getGenreData(rs));
 				}
 				conn.close();
 				return genres;
@@ -37,9 +36,7 @@ public class MySqlJdbcGenreDao implements GenreDao {
 			ps.setInt(1, id);
 			try (var rs = ps.executeQuery()) {
 				if (rs.next()) {
-					Genre genre = new Genre();
-					genre.setId(rs.getInt("id"));
-					genre.setName(rs.getString("name"));
+					Genre genre = getGenreData(rs);
 					conn.close();
 					return genre;
 				}
@@ -57,9 +54,7 @@ public class MySqlJdbcGenreDao implements GenreDao {
 			ps.setString(1, name);
 			try (var rs = ps.executeQuery()) {
 				if (rs.next()) {
-					Genre genre = new Genre();
-					genre.setId(rs.getInt("id"));
-					genre.setName(rs.getString("name"));
+					Genre genre = getGenreData(rs);
 					conn.close();
 					return genre;
 				}
@@ -70,13 +65,35 @@ public class MySqlJdbcGenreDao implements GenreDao {
 		return null;
 	}
 
+	private Genre getGenreData(ResultSet rs) throws SQLException {
+		Genre genre = new Genre();
+		genre.setId(rs.getInt("id"));
+		genre.setName(rs.getString("name"));
+		return genre;
+	}
+
 	@Override
 	public boolean saveGenre(Genre genre) {
 		try (var conn = DBUtils.getConnection()) {
 			var resetAutoIncrement = conn.prepareStatement("ALTER TABLE genre AUTO_INCREMENT = 1;");
 			resetAutoIncrement.executeUpdate();
 			var ps = conn.prepareStatement("INSERT INTO genre (name) VALUES(?);");
-			ps.setString(1, genre.getName());
+			setPrepareStatementData(ps, genre);
+			ps.executeUpdate();
+			conn.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateGenre(Genre genre) {
+		try (var conn = DBUtils.getConnection()) {
+			var ps = conn.prepareStatement("UPDATE genre SET name = ? WHERE id = ?");
+			setPrepareStatementData(ps, genre);
+			ps.setInt(2, genre.getId());
 			ps.executeUpdate();
 			conn.close();
 			return true;
@@ -86,21 +103,10 @@ public class MySqlJdbcGenreDao implements GenreDao {
 		return false;
 	}
 	
-	@Override
-	public boolean updateGenre(Genre genre) {
-		 try (var conn = DBUtils.getConnection()) {
-			 var ps = conn.prepareStatement("UPDATE genre SET name = ? WHERE id = ?");
-			 ps.setString(1, genre.getName());
-			 ps.setInt(2, genre.getId());
-			 ps.executeUpdate();
-			 conn.close();
-			 return true;
-		 } catch(SQLException e) {
-			 e.printStackTrace();
-		 }
-		return false;
+	private void setPrepareStatementData(PreparedStatement ps, Genre genre) throws SQLException {
+		ps.setString(1, genre.getName());
 	}
-	
+
 	@Override
 	public boolean deleteGenreById(int id) {
 		try (var conn = DBUtils.getConnection()) {

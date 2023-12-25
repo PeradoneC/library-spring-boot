@@ -17,7 +17,7 @@ import com.peradone.library.persistence.dto.Genre;
 
 @Component
 @RestController
-public class GenreController {
+public class GenreService {
 	
 	@Autowired
 	private GenreDao genreDao;
