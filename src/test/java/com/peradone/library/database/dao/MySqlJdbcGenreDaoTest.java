@@ -5,12 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import com.peradone.library.persistence.dao.GenreDao;
 import com.peradone.library.persistence.dao.impl.MySqlJdbcGenreDao;
-import com.peradone.library.persistence.dto.Genre;
 
 class MySqlJdbcGenreDaoTest {
 	
@@ -40,17 +38,5 @@ class MySqlJdbcGenreDaoTest {
 		var genre = genreDao.getGenreByName(name);
 		assertNotNull(genre);
 	}
-	
-//	@ParameterizedTest
-//	@CsvSource({
-//		"Isekai",
-//		"Romcom",
-//		"Learning"
-//	})
-//	void saveGenreTest(String name) {
-//		assertTrue(genreDao.saveGenre(new Genre(name)));
-//	}
-	
-	
 
 }

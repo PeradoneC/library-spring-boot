@@ -10,8 +10,6 @@ public interface BookDao {
 
 	Book getBookById(int id);
 
-	Book getBookByName(String name);
-
 	boolean saveBook(Book book);
 
 	boolean updateBook(Book book);
